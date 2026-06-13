@@ -1,0 +1,5 @@
+weasyprint
+markdown
+pygments
+pymdown-extensions
+pyyaml

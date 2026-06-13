@@ -1,0 +1,353 @@
+/* style.css -- styles for OffSec exam report PDFs.
+ *
+ * Companion to offsec_md2pdf.py. The script substitutes __HEADER_TEXT__ at
+ * render time, and appends a :root rule overriding --accent and --title-bg
+ * based on CLI options.
+ *
+ * You can edit this file freely to adjust the look of the report.
+ */
+
+:root {
+    --fg: #1f2328;
+    --fg-strong: #0d1117;
+    --fg-muted: #4b5563;
+    --fg-faint: #6b7280;
+    --rule: #e5e7eb;
+    --rule-strong: #d1d5db;
+    --code-bg: #f8fafc;
+    --code-border: #e2e8f0;
+    --inline-code-bg: #f3f4f6;
+    --inline-code-fg: #b91c1c;
+    --link: #0969da;
+    --placeholder-border: #cbd5e1;
+    --placeholder-bg: #f8fafc;
+    --placeholder-fg: #64748b;
+    --title-fg: #f3f4f6;
+    --title-fg-muted: #9ca3af;
+    --title-rule: #374151;
+}
+
+/* ---------- Page setup ---------- */
+
+@page {
+    size: Letter;
+    margin: 22mm 18mm 20mm 18mm;
+    @bottom-center {
+        content: counter(page);
+        font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+        font-size: 9pt;
+        color: #888;
+    }
+    @top-right {
+        content: "__HEADER_TEXT__";
+        font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+        font-size: 8.5pt;
+        color: #aaa;
+    }
+}
+
+@page title {
+    margin: 0;
+    background: var(--title-bg);
+    @top-right { content: none; }
+    @bottom-center { content: none; }
+}
+
+@page toc {
+    @top-right { content: "Table of Contents"; }
+}
+
+html, body {
+    font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.55;
+    color: var(--fg);
+}
+
+/* ---------- Title page ---------- */
+
+.title-page {
+    page: title;
+    page-break-after: always;
+    page-break-inside: avoid;
+    color: var(--title-fg);
+    background: var(--title-bg);
+    margin: 0;
+    padding: 0;
+}
+.title-band {
+    background: var(--title-bg);
+    padding: 75mm 22mm 20mm 22mm;
+    border-bottom: 3px solid var(--accent);
+}
+.title-main {
+    font-size: 28pt;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    margin-bottom: 8mm;
+    color: #ffffff;
+}
+.title-sub {
+    font-size: 14pt;
+    color: var(--title-fg-muted);
+    font-weight: 400;
+}
+.title-meta {
+    padding: 18mm 22mm 0 22mm;
+    color: var(--title-fg);
+}
+.meta-row {
+    border-bottom: 1px solid var(--title-rule);
+    padding: 4mm 0;
+    font-size: 11pt;
+    overflow: hidden;
+}
+.meta-label {
+    display: inline-block;
+    width: 35mm;
+    color: var(--title-fg-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 9pt;
+    vertical-align: middle;
+}
+.meta-value {
+    display: inline-block;
+    color: var(--title-fg);
+    font-weight: 500;
+    vertical-align: middle;
+}
+.title-footer {
+    margin-top: 30mm;
+    padding: 6mm 22mm;
+    font-size: 9pt;
+    color: var(--fg-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    border-top: 1px solid #1f2937;
+}
+
+/* ---------- Table of contents ---------- */
+
+.toc-page {
+    page: toc;
+    page-break-after: always;
+}
+.toc-title {
+    font-size: 22pt;
+    font-weight: 700;
+    color: var(--fg-strong);
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 4mm;
+    margin-bottom: 8mm;
+}
+.toc ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+.toc > ul > li {
+    margin-top: 3mm;
+    font-weight: 600;
+    font-size: 11pt;
+}
+.toc ul ul {
+    padding-left: 6mm;
+    margin-top: 1mm;
+}
+.toc ul ul li {
+    font-weight: 400;
+    font-size: 10pt;
+    margin-top: 0.8mm;
+}
+.toc ul ul ul {
+    padding-left: 6mm;
+}
+.toc ul ul ul li {
+    font-size: 9.5pt;
+    color: var(--fg-muted);
+}
+.toc a {
+    color: var(--fg);
+    text-decoration: none;
+}
+.toc a::after {
+    content: leader('.') ' ' target-counter(attr(href), page);
+    color: var(--fg-faint);
+    font-variant-numeric: tabular-nums;
+    font-size: 9.5pt;
+}
+
+/* ---------- Body ---------- */
+
+h1 {
+    font-size: 20pt;
+    font-weight: 700;
+    color: var(--fg-strong);
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 2mm;
+    margin-top: 10mm;
+    margin-bottom: 5mm;
+    page-break-before: always;
+    page-break-after: avoid;
+}
+.body > h1:first-child {
+    page-break-before: avoid;
+}
+
+h2 {
+    font-size: 15pt;
+    font-weight: 700;
+    color: var(--fg-strong);
+    margin-top: 8mm;
+    margin-bottom: 3mm;
+    padding-bottom: 1.5mm;
+    border-bottom: 1px solid var(--rule);
+    page-break-after: avoid;
+}
+h3 {
+    font-size: 12.5pt;
+    font-weight: 700;
+    color: #1f2937;
+    margin-top: 6mm;
+    margin-bottom: 2mm;
+    page-break-after: avoid;
+}
+h4 {
+    font-size: 11pt;
+    font-weight: 700;
+    color: #374151;
+    margin-top: 4mm;
+    margin-bottom: 1.5mm;
+    page-break-after: avoid;
+}
+
+p {
+    margin: 0 0 3mm 0;
+    orphans: 3;
+    widows: 3;
+}
+
+ul, ol {
+    margin: 0 0 3mm 0;
+    padding-left: 7mm;
+}
+li { margin-bottom: 1mm; }
+
+strong { color: var(--fg-strong); }
+
+a {
+    color: var(--link);
+    text-decoration: none;
+}
+
+/* Inline code -- Prism-style red on light gray */
+code {
+    font-family: "SF Mono", "Menlo", "Consolas", "Monaco", monospace;
+    font-size: 9.2pt;
+    background: var(--inline-code-bg);
+    color: var(--inline-code-fg);
+    padding: 0.5pt 3pt;
+    border-radius: 3px;
+    border: 1px solid var(--rule);
+}
+
+/* Fenced code blocks. white-space + word-break combo is what prevents
+ * long unbreakable strings (base64, hashes, Windows paths) from
+ * overflowing the page. */
+pre,
+.codehilite, .codehilite pre,
+.highlight,  .highlight  pre {
+    background: var(--code-bg) !important;
+    border: 1px solid var(--code-border);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+    padding: 3mm 4mm;
+    font-family: "SF Mono", "Menlo", "Consolas", "Monaco", monospace;
+    font-size: 8.4pt;
+    line-height: 1.45;
+    color: var(--fg);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow-wrap: anywhere;
+    margin: 3mm 0;
+    page-break-inside: auto;
+}
+.highlight pre, .codehilite pre {
+    border: none;
+    padding: 0;
+    margin: 0;
+    background: transparent !important;
+}
+pre code,
+.codehilite code,
+.highlight code {
+    background: transparent;
+    border: none;
+    color: inherit;
+    padding: 0;
+    font-size: inherit;
+    border-radius: 0;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 3mm 0;
+    font-size: 10pt;
+    page-break-inside: auto;
+}
+th, td {
+    border: 1px solid var(--rule-strong);
+    padding: 2mm 3mm;
+    text-align: left;
+    vertical-align: top;
+}
+th {
+    background: var(--inline-code-bg);
+    font-weight: 700;
+    color: var(--fg-strong);
+}
+tr { page-break-inside: avoid; }
+
+/* Images */
+img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    margin: 2mm 0;
+}
+.img-placeholder {
+    border: 2px dashed var(--placeholder-border);
+    background: var(--placeholder-bg);
+    color: var(--placeholder-fg);
+    padding: 8mm;
+    text-align: center;
+    border-radius: 4px;
+    margin: 3mm 0;
+    font-size: 10pt;
+}
+.img-placeholder code {
+    background: transparent;
+    border: none;
+    color: var(--fg-muted);
+    font-size: 9.5pt;
+}
+
+blockquote {
+    margin: 3mm 0;
+    padding: 2mm 4mm;
+    border-left: 3px solid var(--rule-strong);
+    color: var(--fg-muted);
+    background: #f9fafb;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 6mm 0;
+}
