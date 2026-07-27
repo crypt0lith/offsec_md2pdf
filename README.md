@@ -2,8 +2,8 @@
 
 Render an OffSec exam report markdown file to a PDF.
 
-A markdown template for the OSCP exam report is included [here](https://github.com/crypt0lith/OffsecExamReport_md2pdf/blob/master/example/OSCP-Exam-Template.md).
-See [example/OSCP-OS-12345678-Exam-Report.pdf](https://raw.githubusercontent.com/crypt0lith/OffsecExamReport_md2pdf/master/example/OSCP-OS-12345678-Exam-Report.pdf) for the output PDF.
+A markdown template for the OSCP exam report is included [here](https://github.com/crypt0lith/offsec_md2pdf/blob/master/example/OSCP-Exam-Template.md).
+See [example/OSCP-OS-12345678-Exam-Report.pdf](https://raw.githubusercontent.com/crypt0lith/offsec_md2pdf/master/example/OSCP-OS-12345678-Exam-Report.pdf) for the output PDF.
 
 ## Usage
 
@@ -45,8 +45,8 @@ markdown options:
 ### Installation / Example Usage
 
 ```shell
-git clone https://github.com/crypt0lith/OffsecExamReport_md2pdf.git
-cd ./OffsecExamReport_md2pdf
+git clone https://github.com/crypt0lith/offsec_md2pdf.git
+cd ./offsec_md2pdf
 uv run offsec_md2pdf.py /path/to/OSCP-OS-XXXXXX-Exam-Report.md -o /path/to/outdir
 ```
 
